@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview AI - Your Plan</title>
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/interview.css" />
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="/" class="logout-button" style="text-decoration:none; display:inline-block;">&larr; Home</a>
+        <form method="POST" action="/logout" class="logout-form">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+
+    <%
+        var scoreCls = "score--low"
+        if (report.matchScore >= 80) scoreCls = "score--high"
+        else if (report.matchScore >= 60) scoreCls = "score--mid"
+    %>
+
+    <div id="interview-page" class="interview-page">
+
+        <input type="radio" name="tab" id="tab-technical" class="tab-radio" checked>
+        <input type="radio" name="tab" id="tab-behavioral" class="tab-radio">
+        <input type="radio" name="tab" id="tab-roadmap" class="tab-radio">
+
+        <div class="interview-layout">
+
+            <nav class="interview-nav">
+                <div class="nav-content">
+                    <p class="interview-nav__label">Sections</p>
+
+                    <label class="interview-nav__item" for="tab-technical">
+                        <span class="interview-nav__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
+                        </span>
+                        Technical Questions
+                    </label>
+
+                    <label class="interview-nav__item" for="tab-behavioral">
+                        <span class="interview-nav__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                        </span>
+                        Behavioral Questions
+                    </label>
+
+                    <label class="interview-nav__item" for="tab-roadmap">
+                        <span class="interview-nav__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11" /></svg>
+                        </span>
+                        Road Map
+                    </label>
+                </div>
+
+                <form method="POST" action="/interview/<%= report._id %>/resume/pdf" style="width: 100%;">
+                    <button type="submit" class="button primary-button" style="width: 100%;">
+                        <svg height="0.8rem" style="margin-right:0.8rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.6144 17.7956 11.492 15.7854C12.2731 13.9966 13.6789 12.5726 15.4325 11.7942L17.8482 10.7219C18.6162 10.381 18.6162 9.26368 17.8482 8.92277L15.5079 7.88394C13.7092 7.08552 12.2782 5.60881 11.5105 3.75894L10.6215 1.61673C10.2916.821765 9.19319.821767 8.8633 1.61673L7.97427 3.75892C7.20657 5.60881 5.77553 7.08552 3.97685 7.88394L1.63658 8.92277C.868537 9.26368.868536 10.381 1.63658 10.7219L4.0523 11.7942C5.80589 12.5726 7.21171 13.9966 7.99275 15.7854L8.8704 17.7956C9.20776 18.5682 10.277 18.5682 10.6144 17.7956ZM19.4014 22.6899 19.6482 22.1242C20.0882 21.1156 20.8807 20.3125 21.8695 19.8732L22.6299 19.5353C23.0412 19.3526 23.0412 18.7549 22.6299 18.5722L21.9121 18.2532C20.8978 17.8026 20.0911 16.9698 19.6586 15.9269L19.4052 15.3156C19.2285 14.8896 18.6395 14.8896 18.4628 15.3156L18.2094 15.9269C17.777 16.9698 16.9703 17.8026 15.956 18.2532L15.2381 18.5722C14.8269 18.7549 14.8269 19.3526 15.2381 19.5353L15.9985 19.8732C16.9874 20.3125 17.7798 21.1156 18.2198 22.1242L18.4667 22.6899C18.6473 23.104 19.2207 23.104 19.4014 22.6899Z"></path></svg>
+                        Download Resume
+                    </button>
+                </form>
+            </nav>
+
+            <div class="interview-divider"></div>
+
+            <main class="interview-content">
+
+                <section class="tab-section" data-tab="technical">
+                    <div class="content-header">
+                        <h2>Technical Questions</h2>
+                        <span class="content-header__count"><%= report.technicalQuestions.length %> questions</span>
+                    </div>
+                    <div class="q-list">
+                        <% report.technicalQuestions.forEach(function(item, index) { %>
+                            <details class="q-card">
+                                <summary class="q-card__header">
+                                    <span class="q-card__index">Q<%= index + 1 %></span>
+                                    <p class="q-card__question"><%= item.question %></p>
+                                    <span class="q-card__chevron">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </span>
+                                </summary>
+                                <div class="q-card__body q-card__body--open">
+                                    <div class="q-card__section">
+                                        <span class="q-card__tag q-card__tag--intention">Intention</span>
+                                        <p><%= item.intention %></p>
+                                    </div>
+                                    <div class="q-card__section">
+                                        <span class="q-card__tag q-card__tag--answer">Model Answer</span>
+                                        <p><%= item.answer %></p>
+                                    </div>
+                                </div>
+                            </details>
+                        <% }) %>
+                    </div>
+                </section>
+
+                <section class="tab-section" data-tab="behavioral">
+                    <div class="content-header">
+                        <h2>Behavioral Questions</h2>
+                        <span class="content-header__count"><%= report.behavioralQuestions.length %> questions</span>
+                    </div>
+                    <div class="q-list">
+                        <% report.behavioralQuestions.forEach(function(item, index) { %>
+                            <details class="q-card">
+                                <summary class="q-card__header">
+                                    <span class="q-card__index">Q<%= index + 1 %></span>
+                                    <p class="q-card__question"><%= item.question %></p>
+                                    <span class="q-card__chevron">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </span>
+                                </summary>
+                                <div class="q-card__body q-card__body--open">
+                                    <div class="q-card__section">
+                                        <span class="q-card__tag q-card__tag--intention">Intention</span>
+                                        <p><%= item.intention %></p>
+                                    </div>
+                                    <div class="q-card__section">
+                                        <span class="q-card__tag q-card__tag--answer">Model Answer</span>
+                                        <p><%= item.answer %></p>
+                                    </div>
+                                </div>
+                            </details>
+                        <% }) %>
+                    </div>
+                </section>
+
+                <section class="tab-section" data-tab="roadmap">
+                    <div class="content-header">
+                        <h2>Preparation Road Map</h2>
+                        <span class="content-header__count"><%= report.preparationPlan.length %>-day plan</span>
+                    </div>
+                    <div class="roadmap-list">
+                        <% report.preparationPlan.forEach(function(day) { %>
+                            <div class="roadmap-day">
+                                <div class="roadmap-day__header">
+                                    <span class="roadmap-day__badge">Day <%= day.day %></span>
+                                    <h3 class="roadmap-day__focus"><%= day.focus %></h3>
+                                </div>
+                                <ul class="roadmap-day__tasks">
+                                    <% day.tasks.forEach(function(task) { %>
+                                        <li><span class="roadmap-day__bullet"></span><%= task %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% }) %>
+                    </div>
+                </section>
+
+            </main>
+
+            <div class="interview-divider"></div>
+
+            <aside class="interview-sidebar">
+                <div class="match-score">
+                    <p class="match-score__label">Match Score</p>
+                    <div class="match-score__ring <%= scoreCls %>">
+                        <span class="match-score__value"><%= report.matchScore %></span>
+                        <span class="match-score__pct">%</span>
+                    </div>
+                    <p class="match-score__sub">Strong match for this role</p>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="skill-gaps">
+                    <p class="skill-gaps__label">Skill Gaps</p>
+                    <div class="skill-gaps__list">
+                        <% report.skillGaps.forEach(function(gap) { %>
+                            <span class="skill-tag skill-tag--<%= gap.severity %>"><%= gap.skill %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</body>
+</html>

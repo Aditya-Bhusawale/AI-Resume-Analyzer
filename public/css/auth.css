@@ -1,0 +1,49 @@
+main.auth-main {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main.auth-main .form-container {
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+main.auth-main form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+main.auth-main .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+main.auth-main .input-group input {
+    border: none;
+    outline: none;
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+    border-radius: 0.75rem;
+    font-family: var(--font-stack);
+    font-size: 0.95rem;
+}
+
+main.auth-main .input-group input:focus {
+    outline: 2px solid var(--accent);
+}
+
+main.auth-main a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+main.auth-main a:hover {
+    text-decoration: underline;
+}
